@@ -13,13 +13,11 @@ class URLSessionHttpClient: HttpDataRequestable {
     let asyncScheduler: ConcurrentDispatchQueueScheduler = ConcurrentDispatchQueueScheduler(qos: .default)
     let requestTimeout: Int = 5
     
-    /// Once configured, session object ignores any changes to configuration object. To use new configuration, new URLSession object is needed
     let session: URLSession
     
     init(URLSessionConfiguration: URLSessionConfiguration = .default) {
         session = URLSession(configuration: URLSessionConfiguration)
     }
-    
 
     func requestData(url: String, body: Data? = nil, method: HttpMethod = .get, headers: [String: String] = [:],
                      queryStrings: [String: String] = [:]) -> Observable<(Data)> {
@@ -29,8 +27,7 @@ class URLSessionHttpClient: HttpDataRequestable {
         
         return requestObservable
     }
-    
-    
+        
     func requestDecodable<T: Decodable>(type: T.Type, url: String, body: Data? = nil, method: HttpMethod = .get,
                                         headers: [String: String] = [:],
                                         queryStrings: [String: String] = [:]) -> Observable<(T)> {
@@ -67,7 +64,8 @@ class URLSessionHttpClient: HttpDataRequestable {
                 #endif
                 request.httpBody = body
             }
-            let urlSession = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            
+            let urlSession = self.session.dataTask(with: request, completionHandler: { (data, response, error) in
                 if let error = error {
                     observable.onError(error)
                     return
