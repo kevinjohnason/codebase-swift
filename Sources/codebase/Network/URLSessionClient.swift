@@ -31,17 +31,6 @@ class URLSessionHttpClient: HttpDataRequestable {
     }
     
     
-    /**
-     Making http request and parse into given Decodable object(s)
-     
-     - parameters:
-     - url:  Endpoint URL.
-     - body: HTML body to be posted or put. Default: nil
-     - method: HTML method. Default: .get
-     - headers: HTML headers. Default: [:]
-     - queryStrings: Query strings appended to URL for GET request. Default: [:]
-     - Returns: Observable of a duplet of returned data and URLResponse.
-     */
     func requestDecodable<T: Decodable>(type: T.Type, url: String, body: Data? = nil, method: HttpMethod = .get,
                                         headers: [String: String] = [:],
                                         queryStrings: [String: String] = [:]) -> Observable<(T)> {

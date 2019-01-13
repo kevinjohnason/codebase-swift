@@ -27,7 +27,7 @@ public enum HttpMethod: String {
 }
 
 public protocol HttpDataRequestable: class {
-
+    
     func requestData(url: String, body: Data?, method: HttpMethod, headers: [String: String],
                      queryStrings: [String: String]) -> Observable<(Data)>
 
@@ -63,7 +63,7 @@ public protocol HttpDataRequestable: class {
     
 }
 
-extension HttpDataRequestable {
+extension HttpDataRequestable {        
     
     func requestData(url: String, body: Data? = nil, method: HttpMethod = .get, headers: [String: String] = [:]) -> Observable<(Data)> {
         return requestData(url: url, body: body, method: method, headers: headers, queryStrings: [:])
